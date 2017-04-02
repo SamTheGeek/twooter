@@ -8,8 +8,8 @@ class MyBot < Ebooks::Bot
   def configure
     # Consumer details come from registering an app at https://dev.twitter.com/
     # Once you have consumer details, use "ebooks auth" for new access tokens
-    self.consumer_key = '' # Your app consumer key
-    self.consumer_secret = '' # Your app consumer secret
+    self.consumer_key = 'N79QUHzctNALqL2KdcQMC53Tw' # Your app consumer key
+    self.consumer_secret = 'WjzFnRXoirATjgAEcVZWsAIV1En8J2O5FiUmqW9QiQQtwBo463' # Your app consumer secret
 
     # Users to block instead of interacting with
     self.blacklist = ['tnietzschequote']
@@ -19,7 +19,7 @@ class MyBot < Ebooks::Bot
   end
 
   def on_startup
-    scheduler.every '24h' do
+    scheduler.every '12h' do
       # Tweet something every 24 hours
       # See https://github.com/jmettraux/rufus-scheduler
       # tweet("hi")
@@ -34,7 +34,7 @@ class MyBot < Ebooks::Bot
 
   def on_follow(user)
     # Follow a user back
-    # follow(user.screen_name)
+    follow(user.screen_name)
   end
 
   def on_mention(tweet)
