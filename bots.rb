@@ -37,8 +37,20 @@ class MyBot < Ebooks::Bot
   def top100; @top100 ||= model.keywords.take(100); end
   def top20;  @top20  ||= model.keywords.take(20); end
 
+  private
+    def load_model!
+      return if @model
+
+      @model_path ||= "model/#{original}.model"
+
+      log "Loading model #{model_path}"
+      @model = Ebooks::Model.load(model_path)
+    end
+
   def on_startup
-    model = Ebooks::Model.load("model/samthegeek.model")
+    #model = Ebooks::Model.load("model/samthegeek.model")
+    load_model!
+    
     scheduler.every '12h' do
       tweet(model.make_statement(140))
       # Tweet something every 12 hours
@@ -71,7 +83,7 @@ class MyBot < Ebooks::Bot
     return if tweet.retweeted_status?
     return unless can_pester?(tweet.user.screen_name)
 
-    tokens = Ebooks::NLP.tokenize(tweet.text)
+    tokens = Ebooks::NLP.tokenize(tweet.full_text)
 
     interesting = tokens.find { |t| top100.include?(t.downcase) }
     very_interesting = tokens.find_all { |t| top20.include?(t.downcase) }.length > 2
