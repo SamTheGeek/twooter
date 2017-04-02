@@ -48,6 +48,7 @@ class MyBot < Ebooks::Bot
     end
 
   def on_startup
+    log "Starting up"
     #model = Ebooks::Model.load("model/samthegeek.model")
     load_model!
 
