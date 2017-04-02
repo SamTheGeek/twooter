@@ -1,8 +1,5 @@
 require 'twitter_ebooks'
 
-# This is an example bot definition with event handlers commented out
-# You can define and instantiate as many bots as you like
-
 class UserInfo
   attr_reader :username
 
@@ -85,20 +82,18 @@ class MyBot < Ebooks::Bot
     interesting = tokens.find { |t| top100.include?(t.downcase) }
     very_interesting = tokens.find_all { |t| top20.include?(t.downcase) }.length > 2
 
-    delay do
-      if very_interesting
-        favorite(tweet) if rand < 0.5
-        retweet(tweet) if rand < 0.1
-        if rand < 0.01
-          userinfo(tweet.user.screen_name).pesters_left -= 1
-          reply(tweet, model.make_response(meta(tweet).mentionless, meta(tweet).limit))
-        end
-      elsif interesting
-        favorite(tweet) if rand < 0.05
-        if rand < 0.001
-          userinfo(tweet.user.screen_name).pesters_left -= 1
-          reply(tweet, model.make_response(meta(tweet).mentionless, meta(tweet).limit))
-        end
+    if very_interesting
+      favorite(tweet) if rand < 0.5
+      retweet(tweet) if rand < 0.1
+      if rand < 0.01
+        userinfo(tweet.user.screen_name).pesters_left -= 1
+        reply(tweet, model.make_response(meta(tweet).mentionless, meta(tweet).limit))
+      end
+    elsif interesting
+      favorite(tweet) if rand < 0.05
+      if rand < 0.001
+        userinfo(tweet.user.screen_name).pesters_left -= 1
+        reply(tweet, model.make_response(meta(tweet).mentionless, meta(tweet).limit))
       end
     end
   end
