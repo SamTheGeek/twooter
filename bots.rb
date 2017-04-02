@@ -136,7 +136,6 @@ class MyBot < Ebooks::Bot
  def can_follow?(username)
    @original.nil? || username.casecmp(@original) == 0 || twitter.friendship?(username, @original)
  end
-
 end
 
 # Make a MyBot and attach it to an account
