@@ -38,7 +38,7 @@ class MyBot < Ebooks::Bot
   def top20;  @top20  ||= model.keywords.take(20); end
 
   def on_startup
-    model = Ebooks::Model.load("model/0xabad1dea.model")
+    model = Ebooks::Model.load("model/samthegeek.model")
     scheduler.every '12h' do
       tweet(model.make_statement(140))
       # Tweet something every 12 hours
