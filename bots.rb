@@ -50,7 +50,7 @@ class MyBot < Ebooks::Bot
   def on_startup
     #model = Ebooks::Model.load("model/samthegeek.model")
     load_model!
-    
+
     scheduler.every '12h' do
       tweet(model.make_statement(140))
       # Tweet something every 12 hours
@@ -72,11 +72,7 @@ class MyBot < Ebooks::Bot
   def on_mention(tweet)
     # Become more inclined to pester a user when they talk to us
     userinfo(tweet.user.screen_name).pesters_left += 1
-
-    delay do
-      # Reply to a mention
-      reply(tweet, model.make_response(meta(tweet).mentionless, meta(tweet).limit))
-    end
+    reply(tweet, model.make_response(meta(tweet).mentionless, meta(tweet).limit))
   end
 
   def on_timeline(tweet)
